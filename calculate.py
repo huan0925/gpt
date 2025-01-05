@@ -48,7 +48,7 @@ tools = [
 
 # 測試對話
 messages = [
-    {"role": "user", "content": "請幫我計算 23 加 45"}
+    {"role": "user", "content": "三加五等於多少？"}
 ]
 
 # 調用 API

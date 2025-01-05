@@ -10,17 +10,20 @@ tools = [
   {
     "type": "function",
     "function": {
-      "name": "extract_bullet_point",
-      "description": "Provide three bullet point from input message.",
+      "name": "extract_focal_points",
+      "description": "Extract three focal point from input message.",
       "parameters": {
         "type": "object",
         "properties": {
-          "article": {
-            "type": "string",
-            "description": "Some article content",
+          "focal_points": {
+            "type": "array",
+            "items":{
+                "type": "string",
+                "description": "Extract three focal point from input message."
+            }
           },
         },
-        "required": ["article"],
+        "required": ["focal_points"],
       },
     }
   }
@@ -36,33 +39,38 @@ completion = client.chat.completions.create(
   tool_choice="auto"
 )
 
+response = json.loads(completion.choices[0].message.tool_calls[0].function.arguments)
+
+for i in range(len(response['focal_points'])):
+    print(f"Point{i}: {response['focal_points'][i]}")
+
 # 檢查是否有函數調用
-if completion.choices[0].message.tool_calls:
-    # 獲取函數調用信息
-    tool_call = completion.choices[0].message.tool_calls[0]
-    function_name = tool_call.function.name
-    function_args = json.loads(tool_call.function.arguments)
+# if completion.choices[0].message.tool_calls:
+#     # 獲取函數調用信息
+#     tool_call = completion.choices[0].message.tool_calls[0]
+#     function_name = tool_call.function.name
+#     function_args = json.loads(tool_call.function.arguments)
     
-    # 執行函數
-    if function_name == "extract_bullet_point":
-        function_response = extract_bullet_point(function_args["article"])
+#     # 執行函數
+#     if function_name == "extract_bullet_point":
+#         function_response = extract_bullet_point(function_args["article"])
         
-        # 將函數執行結果添加到對話中
-        messages.append(completion.choices[0].message)  # 添加助手的回應
-        messages.append({
-            "role": "tool",
-            "tool_call_id": tool_call.id,
-            "name": function_name,
-            "content": json.dumps(function_response)
-        })
+#         # 將函數執行結果添加到對話中
+#         messages.append(completion.choices[0].message)  # 添加助手的回應
+#         messages.append({
+#             "role": "tool",
+#             "tool_call_id": tool_call.id,
+#             "name": function_name,
+#             "content": json.dumps(function_response)
+#         })
         
-        # 獲取最終結果
-        final_response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=messages
-        )
+#         # 獲取最終結果
+#         final_response = client.chat.completions.create(
+#             model="gpt-4o-mini",
+#             messages=messages
+#         )
         
-        print("最終回答:", final_response.choices[0].message.content)
-else:
-    # 如果沒有函數調用，直接輸出回答
-    print("直接回答:", completion.choices[0].message.content)
+#         print("最終回答:", final_response.choices[0].message.content)
+# else:
+#     # 如果沒有函數調用，直接輸出回答
+#     print("直接回答:", completion.choices[0].message.content)
