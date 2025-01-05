@@ -3,8 +3,9 @@ from openai import OpenAI
 
 client = OpenAI()
 
+# all arguments can be setted on your own
 class CalendarEvent(BaseModel):
-    enent_name: str
+    event_name: str
     date: str
     participants: list[str]
 
