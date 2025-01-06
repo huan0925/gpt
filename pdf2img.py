@@ -165,7 +165,7 @@ def analyze_pdf_with_gpt(pdf_path, prompt):
 # prompt = "How old is she now?"
 # analyze_pdf_with_gpt(pdf_path, prompt)
 
-pdf_path = '/Users/linzhihuan/Downloads/2023 MediaTek Sustainability Report Chinese.pdf'
-page_num = 10  # 第一页从0开始
-prompt = "聯發科與供應商的溝通方法有哪些？各自的頻率為多少？"
+pdf_path = '/Users/linzhihuan/Desktop/gpt/Test Document.pdf'
+page_num = 0  # 第一页从0开始
+prompt = "Gama 系列的 XC1234 的防護等級是什麼？"
 analyze_specific_page_with_gpt(pdf_path, page_num, prompt)
