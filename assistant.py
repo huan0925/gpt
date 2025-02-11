@@ -5,7 +5,7 @@ def chat_with_assistant():
     
     # 创建助手
     assistant = client.beta.assistants.create(
-        name="编程助手",
+        name="Coding assistant",
         instructions="你是一个专业的编程助手，可以帮助用户解决各种编程问题。",
         model="gpt-4o-mini",
         tools=[{"type": "code_interpreter"}]
