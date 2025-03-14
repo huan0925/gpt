@@ -65,7 +65,7 @@ async def chat():
                 new_input = prompt
                 conversation_history = True
             
-            # 使用 Runner.run 進行對話
+            # 使用 Runner.run 進行對話 Runner.run_streamed 不可使用 await 方式
             result = await Runner.run(
                 starting_agent=triage_agent,
                 input=new_input
